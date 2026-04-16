@@ -4,372 +4,250 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Arab Spring Intervention Matrix — HNC12</title>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<title>Arab Spring Intervention Matrix</title>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Newsreader', Georgia, serif; background: #1a1714; color: #e8e0d4; min-height: 100vh; padding: 20px 16px; }
-  .mono { font-family: 'JetBrains Mono', monospace; }
-  .container { max-width: 1100px; margin: 0 auto; }
-
-/* Header */
-.header { border-bottom: 2px solid #c4956a; padding-bottom: 12px; margin-bottom: 8px; }
-.header h1 { font-size: 26px; font-weight: 700; color: #c4956a; letter-spacing: -0.5px; line-height: 1.15; }
-.header p { font-size: 13px; color: #8a7e70; margin-top: 6px; font-family: ‘JetBrains Mono’, monospace; letter-spacing: 0.3px; }
-
-/* Nav */
-.nav { display: flex; gap: 4px; margin-top: 12px; margin-bottom: 28px; }
-.nav-btn { padding: 7px 16px; border: 1px solid #3a342e; border-radius: 4px; background: transparent; color: #8a7e70; font-family: ‘JetBrains Mono’, monospace; font-size: 11px; font-weight: 700; cursor: pointer; letter-spacing: 0.5px; text-transform: uppercase; transition: all 0.15s; }
-.nav-btn.active { border-color: #c4956a; background: #c4956a; color: #1a1714; }
-
-/* Cards */
-.card { padding: 16px; background: #221f1b; border-radius: 8px; border: 1px solid #3a342e; }
-.card-title { margin: 0 0 14px; font-size: 13px; font-family: ‘JetBrains Mono’, monospace; color: #8a7e70; text-transform: uppercase; letter-spacing: 1px; }
-
-/* Tables */
-table { width: 100%; border-collapse: collapse; }
-th { padding: 8px 6px; font-size: 10px; font-family: ‘JetBrains Mono’, monospace; color: #5a524a; text-transform: uppercase; letter-spacing: 0.8px; border-bottom: 1px solid #3a342e; text-align: center; font-weight: 600; }
-td { padding: 10px 6px; font-size: 14px; border-bottom: 1px solid #2a2420; text-align: center; }
-th.left, td.left { text-align: left; }
-tr.clickable { cursor: pointer; transition: background 0.15s; }
-tr.clickable:hover { background: #2a2420; }
-
-/* Heat cells */
-.heat-cell { width: 36px; height: 36px; border-radius: 4px; margin: 0 auto; display: flex; align-items: center; justify-content: center; font-family: ‘JetBrains Mono’, monospace; font-size: 14px; font-weight: 700; }
-
-/* Outcome badges */
-.badge { display: inline-block; padding: 3px 10px; border-radius: 4px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: #1a1714; font-family: ‘JetBrains Mono’, monospace; }
-
-/* Sliders */
-.slider-row { margin-bottom: 10px; }
-.slider-row label { display: flex; justify-content: space-between; margin-bottom: 2px; }
-.slider-row label span { font-size: 13px; color: #c4b89a; }
-.slider-row label .desc { font-size: 10px; color: #5a524a; font-family: ‘JetBrains Mono’, monospace; }
-.slider-wrap { display: flex; align-items: center; gap: 8px; }
-.slider-wrap input[type=range] { flex: 1; height: 6px; -webkit-appearance: none; appearance: none; border-radius: 3px; outline: none; cursor: pointer; background: #2a2420; }
-.slider-wrap input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%; background: #c4956a; cursor: pointer; }
-.slider-val { font-family: ‘JetBrains Mono’, monospace; font-size: 13px; min-width: 18px; text-align: right; font-weight: 600; }
-
-/* Country selector */
-.country-selector { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
-.country-btn { padding: 6px 12px; border: 1px solid #3a342e; border-radius: 4px; background: transparent; color: #8a7e70; font-family: ‘JetBrains Mono’, monospace; font-size: 12px; cursor: pointer; font-weight: 400; transition: all 0.15s; }
-.country-btn.active { border-color: #c4956a; background: #2a2420; color: #c4956a; font-weight: 700; }
-
-/* Grid layouts */
-.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-@media (max-width: 700px) { .grid-2 { grid-template-columns: 1fr; } }
-
-/* Outcome buttons */
-.outcome-btn { display: block; width: 100%; padding: 8px 12px; border: 2px solid #3a342e; border-radius: 6px; background: transparent; color: #8a7e70; font-family: ‘JetBrains Mono’, monospace; font-size: 12px; font-weight: 600; cursor: pointer; text-align: left; margin-bottom: 6px; transition: all 0.15s; }
-
-/* Notes textarea */
-.notes-area { width: 100%; min-height: 140px; padding: 10px; border: 1px solid #3a342e; border-radius: 6px; background: #1a1714; color: #c4b89a; font-family: ‘Newsreader’, serif; font-size: 14px; line-height: 1.5; resize: vertical; outline: none; }
-
-/* Stat boxes */
-.stat-row { display: flex; gap: 24px; flex-wrap: wrap; padding: 16px; background: #221f1b; border-radius: 8px; border: 1px solid #3a342e; margin-top: 20px; }
-.stat-box .stat-label { font-size: 10px; color: #5a524a; font-family: ‘JetBrains Mono’, monospace; text-transform: uppercase; letter-spacing: 1px; }
-.stat-box .stat-value { font-size: 20px; font-weight: 700; color: #c4956a; font-family: ‘JetBrains Mono’, monospace; }
-
-/* Actor dot */
-.actor-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; }
-
-/* Scatter plot */
-.scatter-container { position: relative; height: 340px; border: 1px solid #3a342e; border-radius: 6px; overflow: hidden; background: #1a1714; }
-.scatter-ylabel { position: absolute; left: 4px; font-size: 9px; font-family: ‘JetBrains Mono’, monospace; white-space: nowrap; }
-.scatter-gridline { position: absolute; left: 130px; right: 10px; height: 1px; background: #2a2420; }
-.scatter-point { position: absolute; border-radius: 50%; display: flex; align-items: center; justify-content: center; transform: translate(-50%, -50%); z-index: 2; cursor: default; }
-.scatter-xlabel { position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); font-size: 10px; color: #5a524a; font-family: ‘JetBrains Mono’, monospace; white-space: nowrap; }
-
-/* Analysis text */
-.analysis p { margin: 0 0 10px; font-size: 14px; color: #c4b89a; line-height: 1.7; }
-.analysis strong { color: #c4956a; }
-
-.view-section { display: none; }
-.view-section.active { display: block; }
-
-/* Weight controls */
-.weight-panel { margin-top: 24px; }
-.weight-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
-.weight-grid label span { font-size: 12px; color: #8a7e70; font-family: ‘JetBrains Mono’, monospace; }
-
-.hint { font-size: 12px; color: #5a524a; margin-top: 12px; font-style: italic; }
-.overflow-x { overflow-x: auto; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: Georgia, serif; background:#1a1714; color:#e8e0d4; padding:16px; }
+.wrap { max-width:1000px; margin:0 auto; }
+h1 { font-size:22px; color:#c4956a; border-bottom:2px solid #c4956a; padding-bottom:10px; margin-bottom:4px; }
+.sub { font-size:12px; color:#8a7e70; margin-bottom:16px; }
+.tabs { display:flex; gap:4px; margin-bottom:20px; }
+.tab { padding:8px 14px; border:1px solid #3a342e; border-radius:4px; background:none; color:#8a7e70; font-size:11px; font-weight:bold; cursor:pointer; text-transform:uppercase; letter-spacing:0.5px; }
+.tab.on { background:#c4956a; color:#1a1714; border-color:#c4956a; }
+.panel { display:none; }
+.panel.on { display:block; }
+.tbl { width:100%; border-collapse:collapse; font-size:13px; }
+.tbl th { padding:8px 4px; font-size:10px; color:#5a524a; text-transform:uppercase; letter-spacing:0.5px; border-bottom:1px solid #3a342e; text-align:center; }
+.tbl td { padding:8px 4px; border-bottom:1px solid #2a2420; text-align:center; }
+.tbl th:first-child, .tbl td:first-child { text-align:left; }
+.tbl tr:hover { background:#2a2420; cursor:pointer; }
+.cell { display:inline-block; width:32px; height:32px; line-height:32px; border-radius:4px; font-weight:bold; font-size:13px; text-align:center; }
+.badge { display:inline-block; padding:2px 8px; border-radius:3px; font-size:10px; font-weight:bold; text-transform:uppercase; color:#1a1714; letter-spacing:0.3px; }
+.sel-bar { display:flex; flex-wrap:wrap; gap:4px; margin-bottom:16px; }
+.sel-btn { padding:5px 10px; border:1px solid #3a342e; border-radius:4px; background:none; color:#8a7e70; font-size:11px; cursor:pointer; }
+.sel-btn.on { border-color:#c4956a; background:#2a2420; color:#c4956a; font-weight:bold; }
+.card { padding:14px; background:#221f1b; border:1px solid #3a342e; border-radius:6px; margin-bottom:16px; }
+.card h3 { font-size:11px; color:#8a7e70; text-transform:uppercase; letter-spacing:0.8px; margin-bottom:10px; }
+.row { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; font-size:13px; color:#c4b89a; }
+.row input[type=range] { width:50%; height:5px; -webkit-appearance:none; appearance:none; background:#2a2420; border-radius:3px; outline:none; cursor:pointer; }
+.row input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:14px; height:14px; border-radius:50%; background:#c4956a; }
+.val { font-weight:bold; min-width:16px; text-align:right; color:#c4956a; font-size:13px; }
+.out-btn { display:block; width:100%; padding:8px; border:2px solid #3a342e; border-radius:4px; background:none; color:#8a7e70; font-size:12px; font-weight:600; text-align:left; cursor:pointer; margin-bottom:5px; }
+textarea { width:100%; min-height:100px; padding:8px; border:1px solid #3a342e; border-radius:4px; background:#1a1714; color:#c4b89a; font-family:Georgia,serif; font-size:13px; line-height:1.5; resize:vertical; outline:none; }
+.stats { display:flex; flex-wrap:wrap; gap:16px; padding:12px; background:#221f1b; border:1px solid #3a342e; border-radius:6px; }
+.stat-label { font-size:9px; color:#5a524a; text-transform:uppercase; letter-spacing:0.8px; }
+.stat-val { font-size:18px; font-weight:bold; color:#c4956a; }
+.scatter { position:relative; height:300px; background:#1a1714; border:1px solid #3a342e; border-radius:6px; overflow:hidden; margin-bottom:16px; }
+.dot { position:absolute; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:bold; transform:translate(-50%,-50%); color:#e8e0d4; }
+.gridh { position:absolute; left:100px; right:8px; height:1px; background:#2a2420; }
+.ylabel { position:absolute; left:4px; font-size:8px; white-space:nowrap; }
+.xlabel { position:absolute; bottom:4px; left:50%; transform:translateX(-50%); font-size:9px; color:#5a524a; white-space:nowrap; }
+.note { font-size:12px; color:#5a524a; font-style:italic; margin-top:8px; }
+.analysis { font-size:13px; color:#c4b89a; line-height:1.7; }
+.analysis b { color:#c4956a; }
+.g2 { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+@media(max-width:600px) { .g2 { grid-template-columns:1fr; } }
 </style>
-
 </head>
 <body>
-
-<div class="container">
-  <div class="header">
-    <h1>Arab Spring Intervention Matrix</h1>
-    <p>Measuring foreign intervention impact on outcomes across 8 countries</p>
-  </div>
-
-  <div class="nav">
-    <button class="nav-btn active" onclick="switchView('matrix')">Heatmap</button>
-    <button class="nav-btn" onclick="switchView('country')">Country Detail</button>
-    <button class="nav-btn" onclick="switchView('correlation')">Correlation</button>
-  </div>
-
-  <div id="view-matrix" class="view-section active"></div>
-  <div id="view-country" class="view-section"></div>
-  <div id="view-correlation" class="view-section"></div>
+<div class="wrap">
+<h1>Arab Spring Intervention Matrix</h1>
+<p class="sub">Measuring foreign intervention impact on outcomes across 8 countries</p>
+<div class="tabs">
+<button class="tab on" id="t0" onclick="go(0)">Heatmap</button>
+<button class="tab" id="t1" onclick="go(1)">Country Detail</button>
+<button class="tab" id="t2" onclick="go(2)">Correlation</button>
 </div>
-
+<div class="panel on" id="p0"></div>
+<div class="panel" id="p1"></div>
+<div class="panel" id="p2"></div>
+</div>
 <script>
-const COUNTRIES = [
-  { id: "tunisia", name: "Tunisia", flag: "TN" },
-  { id: "egypt", name: "Egypt", flag: "EG" },
-  { id: "libya", name: "Libya", flag: "LY" },
-  { id: "syria", name: "Syria", flag: "SY" },
-  { id: "yemen", name: "Yemen", flag: "YE" },
-  { id: "bahrain", name: "Bahrain", flag: "BH" },
-  { id: "morocco", name: "Morocco", flag: "MA" },
-  { id: "jordan", name: "Jordan", flag: "JO" },
+var C=[
+{id:"tunisia",n:"Tunisia"},
+{id:"egypt",n:"Egypt"},
+{id:"libya",n:"Libya"},
+{id:"syria",n:"Syria"},
+{id:"yemen",n:"Yemen"},
+{id:"bahrain",n:"Bahrain"},
+{id:"morocco",n:"Morocco"},
+{id:"jordan",n:"Jordan"}
 ];
-
-const INTERVENTION_TYPES = [
-  { id: "military", label: "Direct military", desc: "Air strikes, ground troops, naval blockade" },
-  { id: "proxy", label: "Proxy / covert", desc: "Arms, training, intelligence to non-state actors" },
-  { id: "diplomatic", label: "Diplomatic pressure", desc: "Sanctions, UN resolutions, mediation" },
-  { id: "financial", label: "Financial leverage", desc: "Aid conditionality, loans, investment" },
-  { id: "media", label: "Media / information", desc: "State media influence, narrative shaping" },
+var IT=[
+{id:"military",l:"Direct military",d:"Air strikes, ground troops"},
+{id:"proxy",l:"Proxy / covert",d:"Arms, training, intel"},
+{id:"diplomatic",l:"Diplomatic",d:"Sanctions, UN resolutions"},
+{id:"financial",l:"Financial",d:"Aid, loans, investment"},
+{id:"media",l:"Media / info",d:"State media, narrative"}
 ];
-
-const ACTORS = [
-  { id: "us", label: "United States", color: "#3B5998" },
-  { id: "eu", label: "EU / France / UK", color: "#1D4ED8" },
-  { id: "russia", label: "Russia", color: "#B91C1C" },
-  { id: "saudi", label: "Saudi Arabia / UAE", color: "#15803D" },
-  { id: "qatar", label: "Qatar", color: "#7C2D12" },
-  { id: "turkey", label: "Turkey", color: "#DC2626" },
-  { id: "iran", label: "Iran", color: "#4C1D95" },
-  { id: "un", label: "UN / Arab League", color: "#0369A1" },
+var AC=[
+{id:"us",l:"United States",c:"#3B5998"},
+{id:"eu",l:"EU / France / UK",c:"#1D4ED8"},
+{id:"russia",l:"Russia",c:"#B91C1C"},
+{id:"saudi",l:"Saudi / UAE",c:"#15803D"},
+{id:"qatar",l:"Qatar",c:"#7C2D12"},
+{id:"turkey",l:"Turkey",c:"#DC2626"},
+{id:"iran",l:"Iran",c:"#4C1D95"},
+{id:"un",l:"UN / Arab League",c:"#0369A1"}
 ];
-
-const OUTCOMES = [
-  { id: "democratic", label: "Democratic transition", color: "#16a34a", value: 4 },
-  { id: "partial", label: "Partial reform", color: "#ca8a04", value: 3 },
-  { id: "restoration", label: "Authoritarian restoration", color: "#ea580c", value: 2 },
-  { id: "collapse", label: "State collapse / civil war", color: "#dc2626", value: 1 },
+var OC=[
+{id:"democratic",l:"Democratic transition",c:"#16a34a",v:4},
+{id:"partial",l:"Partial reform",c:"#ca8a04",v:3},
+{id:"restoration",l:"Authoritarian restoration",c:"#ea580c",v:2},
+{id:"collapse",l:"State collapse",c:"#dc2626",v:1}
 ];
-
-const HEAT_COLORS = ["#1a1714", "#2d2520", "#4a3520", "#7a5530", "#a8753a", "#c4956a"];
-
-let data = {
-  tunisia: { outcome: "democratic", scores: { military: 0, proxy: 0, diplomatic: 2, financial: 2, media: 1 }, actors: { us: 1, eu: 2, russia: 0, saudi: 1, qatar: 2, turkey: 1, iran: 0, un: 1 }, notes: "Minimal foreign military involvement. EU/Qatar provided diplomatic/financial support to transition. Ennahda received Gulf backing." },
-  egypt: { outcome: "restoration", scores: { military: 0, proxy: 1, diplomatic: 3, financial: 4, media: 3 }, actors: { us: 3, eu: 2, russia: 1, saudi: 4, qatar: 3, turkey: 2, iran: 1, un: 1 }, notes: "Saudi/UAE bankrolled Sisi coup with $12B+ in aid. Qatar backed Morsi. U.S. suspended then restored aid. No direct military intervention but massive financial leverage." },
-  libya: { outcome: "collapse", scores: { military: 5, proxy: 4, diplomatic: 3, financial: 2, media: 2 }, actors: { us: 4, eu: 5, russia: 1, saudi: 2, qatar: 4, turkey: 3, iran: 0, un: 3 }, notes: "NATO air campaign (UNSCR 1973). Qatar/France armed rebels. Post-Gaddafi vacuum filled by competing militias backed by rival external sponsors." },
-  syria: { outcome: "collapse", scores: { military: 5, proxy: 5, diplomatic: 3, financial: 3, media: 4 }, actors: { us: 4, eu: 2, russia: 5, saudi: 4, qatar: 4, turkey: 5, iran: 5, un: 2 }, notes: "Maximum external intervention from all sides. Russia/Iran militarily backed Assad. Gulf states/Turkey armed opposition. U.S. armed Kurds. Proxy war layered on civil war." },
-  yemen: { outcome: "collapse", scores: { military: 5, proxy: 5, diplomatic: 2, financial: 3, media: 3 }, actors: { us: 3, eu: 1, russia: 0, saudi: 5, qatar: 2, turkey: 1, iran: 4, un: 2 }, notes: "Saudi-led coalition airstrikes from 2015. Iran backed Houthis with arms/advisors. U.S. provided intelligence and logistics. Humanitarian catastrophe." },
-  bahrain: { outcome: "restoration", scores: { military: 4, proxy: 1, diplomatic: 1, financial: 3, media: 2 }, actors: { us: 2, eu: 1, russia: 0, saudi: 5, qatar: 0, turkey: 0, iran: 2, un: 0 }, notes: "Saudi/GCC Peninsula Shield force entered March 2011 to crush protests. U.S. Fifth Fleet based in Bahrain \u2014 muted response. Iran accused of backing Shia protesters." },
-  morocco: { outcome: "partial", scores: { military: 0, proxy: 0, diplomatic: 1, financial: 2, media: 1 }, actors: { us: 1, eu: 2, russia: 0, saudi: 2, qatar: 1, turkey: 0, iran: 0, un: 0 }, notes: "Minimal external intervention. Gulf states provided financial backstop. Monarchy co-opted Feb 20 movement with constitutional reform. France maintained close ties." },
-  jordan: { outcome: "partial", scores: { military: 0, proxy: 0, diplomatic: 1, financial: 3, media: 1 }, actors: { us: 2, eu: 1, russia: 0, saudi: 3, qatar: 1, turkey: 0, iran: 0, un: 0 }, notes: "Gulf/U.S. financial aid stabilized Hashemite monarchy. No military intervention. IMF conditionality shaped reform pace. Refugee crisis from Syria increased leverage of donors." },
+var HC=["#1a1714","#2d2520","#4a3520","#7a5530","#a8753a","#c4956a"];
+var D={
+tunisia:{o:"democratic",s:{military:0,proxy:0,diplomatic:2,financial:2,media:1},a:{us:1,eu:2,russia:0,saudi:1,qatar:2,turkey:1,iran:0,un:1},t:"Minimal foreign military involvement. EU/Qatar provided diplomatic/financial support. Ennahda received Gulf backing."},
+egypt:{o:"restoration",s:{military:0,proxy:1,diplomatic:3,financial:4,media:3},a:{us:3,eu:2,russia:1,saudi:4,qatar:3,turkey:2,iran:1,un:1},t:"Saudi/UAE bankrolled Sisi coup with $12B+ in aid. Qatar backed Morsi. U.S. suspended then restored aid."},
+libya:{o:"collapse",s:{military:5,proxy:4,diplomatic:3,financial:2,media:2},a:{us:4,eu:5,russia:1,saudi:2,qatar:4,turkey:3,iran:0,un:3},t:"NATO air campaign (UNSCR 1973). Qatar/France armed rebels. Post-Gaddafi vacuum filled by competing militias."},
+syria:{o:"collapse",s:{military:5,proxy:5,diplomatic:3,financial:3,media:4},a:{us:4,eu:2,russia:5,saudi:4,qatar:4,turkey:5,iran:5,un:2},t:"Maximum intervention from all sides. Russia/Iran backed Assad. Gulf/Turkey armed opposition. U.S. armed Kurds."},
+yemen:{o:"collapse",s:{military:5,proxy:5,diplomatic:2,financial:3,media:3},a:{us:3,eu:1,russia:0,saudi:5,qatar:2,turkey:1,iran:4,un:2},t:"Saudi-led coalition airstrikes from 2015. Iran backed Houthis. U.S. provided intelligence and logistics."},
+bahrain:{o:"restoration",s:{military:4,proxy:1,diplomatic:1,financial:3,media:2},a:{us:2,eu:1,russia:0,saudi:5,qatar:0,turkey:0,iran:2,un:0},t:"Saudi/GCC Peninsula Shield crushed protests. U.S. Fifth Fleet based there - muted response."},
+morocco:{o:"partial",s:{military:0,proxy:0,diplomatic:1,financial:2,media:1},a:{us:1,eu:2,russia:0,saudi:2,qatar:1,turkey:0,iran:0,un:0},t:"Minimal intervention. Gulf financial backstop. Monarchy co-opted Feb 20 movement with reform."},
+jordan:{o:"partial",s:{military:0,proxy:0,diplomatic:1,financial:3,media:1},a:{us:2,eu:1,russia:0,saudi:3,qatar:1,turkey:0,iran:0,un:0},t:"Gulf/U.S. financial aid stabilized monarchy. IMF conditionality shaped reform pace."}
 };
+var W={military:1,proxy:1,diplomatic:1,financial:1,media:1};
+var sel="tunisia";
+var cur=0;
 
-let weights = { military: 1, proxy: 1, diplomatic: 1, financial: 1, media: 1 };
-let selectedCountry = "tunisia";
-let currentView = "matrix";
+function wt(id){var c=D[id];if(!c)return 0;var s=0,w=0;for(var i=0;i<IT.length;i++){s+=c.s[IT[i].id]*W[IT[i].id];w+=W[IT[i].id];}return w>0?s/w:0;}
+function at(id){var c=D[id];if(!c)return 0;var s=0;for(var i=0;i<AC.length;i++){s+=c.a[AC[i].id];}return s;}
+function da(id){var c=D[id];if(!c)return”-”;var mx=0,b=””;for(var i=0;i<AC.length;i++){if(c.a[AC[i].id]>mx){mx=c.a[AC[i].id];b=AC[i].l;}}return b||”-”;}
+function bg(oid){for(var i=0;i<OC.length;i++){if(OC[i].id===oid)return’<span class="badge" style="background:'+OC[i].c+'">’+OC[i].l+’</span>’;}return””;}
 
-function weightedTotal(cid) {
-  const c = data[cid]; if (!c) return 0;
-  let s = 0, w = 0;
-  INTERVENTION_TYPES.forEach(t => { s += c.scores[t.id] * weights[t.id]; w += weights[t.id]; });
-  return w > 0 ? s / w : 0;
+function go(n){
+cur=n;
+for(var i=0;i<3;i++){
+document.getElementById(“t”+i).className=i===n?“tab on”:“tab”;
+document.getElementById(“p”+i).className=i===n?“panel on”:“panel”;
+}
+draw();
 }
 
-function actorTotal(cid) {
-  const c = data[cid]; if (!c) return 0;
-  return Object.values(c.actors).reduce((a, b) => a + b, 0);
+function draw(){
+if(cur===0)d0();
+else if(cur===1)d1();
+else d2();
 }
 
-function dominantActor(cid) {
-  const c = data[cid]; if (!c) return "\u2014";
-  let max = -1, best = "";
-  Object.entries(c.actors).forEach(([k, v]) => { if (v > max) { max = v; best = k; } });
-  return ACTORS.find(a => a.id === best)?.label || "\u2014";
+function d0(){
+var h=’<div style="overflow-x:auto"><table class="tbl"><thead><tr><th>Country</th>’;
+for(var j=0;j<IT.length;j++){h+=’<th>’+IT[j].l+’</th>’;}
+h+=’<th>Weighted</th><th>Outcome</th></tr></thead><tbody>’;
+for(var i=0;i<C.length;i++){
+var c=C[i],d=D[c.id],w=wt(c.id);
+h+=’<tr onclick="sel=\''+c.id+'\';go(1)">’;
+h+=’<td style="font-weight:600">’+c.n+’</td>’;
+for(var j=0;j<IT.length;j++){
+var v=d.s[IT[j].id],fg=v>=3?”#1a1714”:”#c4956a”;
+h+=’<td><span class="cell" style="background:'+HC[v]+';color:'+fg+'">’+v+’</span></td>’;
+}
+h+=’<td style="font-weight:700;color:'+(w>=3?'#c4956a':'#8a7e70')+'">’+w.toFixed(1)+’</td>’;
+h+=’<td>’+bg(d.o)+’</td></tr>’;
+}
+h+=’</tbody></table></div>’;
+h+=’<div class="card" style="margin-top:16px"><h3>Variable weights</h3>’;
+for(var j=0;j<IT.length;j++){
+var t=IT[j];
+h+=’<div class="row"><span>’+t.l+’</span><input type="range" min="0" max="3" value="'+W[t.id]+'" oninput="W[\''+t.id+'\']=parseInt(this.value);this.nextElementSibling.textContent=this.value;draw()"><span class="val">’+W[t.id]+’</span></div>’;
+}
+h+=’</div>’;
+h+=’<p class="note">Tap any row for full country breakdown.</p>’;
+document.getElementById(“p0”).innerHTML=h;
 }
 
-function badgeHTML(outcomeId) {
-  const o = OUTCOMES.find(x => x.id === outcomeId);
-  if (!o) return "";
-  return `<span class="badge" style="background:${o.color}">${o.label}</span>`;
+function d1(){
+var c=D[sel];
+var h=’<div class="sel-bar">’;
+for(var i=0;i<C.length;i++){
+h+=’<button class="sel-btn'+(sel===C[i].id?' on':'')+'" onclick="sel=\''+C[i].id+'\';draw()">’+C[i].n+’</button>’;
+}
+h+=’</div><div class="g2">’;
+h+=’<div class="card"><h3>Intervention scores (0-5)</h3>’;
+for(var j=0;j<IT.length;j++){
+var t=IT[j],v=c.s[t.id];
+h+=’<div class="row"><span>’+t.l+’</span><input type="range" min="0" max="5" value="'+v+'" oninput="D[\''+sel+'\'].s[\''+t.id+'\']=parseInt(this.value);this.nextElementSibling.textContent=this.value"><span class="val">’+v+’</span></div>’;
+}
+h+=’</div>’;
+h+=’<div class="card"><h3>Actor involvement (0-5)</h3>’;
+for(var j=0;j<AC.length;j++){
+var a=AC[j],v=c.a[a.id];
+h+=’<div class="row"><span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:'+a.c+';margin-right:5px;vertical-align:middle"></span>’+a.l+’</span><input type="range" min="0" max="5" value="'+v+'" oninput="D[\''+sel+'\'].a[\''+a.id+'\']=parseInt(this.value);this.nextElementSibling.textContent=this.value"><span class="val">’+v+’</span></div>’;
+}
+h+=’</div></div>’;
+h+=’<div class="g2">’;
+h+=’<div class="card"><h3>Outcome</h3>’;
+for(var j=0;j<OC.length;j++){
+var o=OC[j],on=c.o===o.id;
+h+=’<button class="out-btn" style="border-color:'+(on?o.c:'#3a342e')+';color:'+(on?o.c:'#8a7e70')+';background:'+(on?o.c+'22':'none')+'" onclick="D[\''+sel+'\'].o=\''+o.id+'\';draw()">’+o.l+’</button>’;
+}
+h+=’</div>’;
+h+=’<div class="card"><h3>Notes</h3><textarea oninput="D[\''+sel+'\'].t=this.value">’+c.t+’</textarea></div>’;
+h+=’</div>’;
+var tw=wt(sel),ta=at(sel),td=da(sel);
+h+=’<div class="stats">’;
+h+=’<div><div class="stat-label">Weighted</div><div class="stat-val">’+tw.toFixed(1)+’</div></div>’;
+h+=’<div><div class="stat-label">Actors</div><div class="stat-val">’+ta+’</div></div>’;
+h+=’<div><div class="stat-label">Dominant</div><div class="stat-val" style="font-size:13px">’+td+’</div></div>’;
+h+=’<div><div class="stat-label">Outcome</div><div>’+bg(c.o)+’</div></div>’;
+h+=’</div>’;
+document.getElementById(“p1”).innerHTML=h;
 }
 
-function switchView(v) {
-  currentView = v;
-  document.querySelectorAll('.nav-btn').forEach((btn, i) => {
-    btn.classList.toggle('active', ['matrix','country','correlation'][i] === v);
-  });
-  document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
-  document.getElementById('view-' + v).classList.add('active');
-  render();
+function d2(){
+var pts=[];
+for(var i=0;i<C.length;i++){
+var ov=0;for(var j=0;j<OC.length;j++){if(OC[j].id===D[C[i].id].o)ov=OC[j].v;}
+pts.push({id:C[i].id,n:C[i].n,int:wt(C[i].id),act:at(C[i].id),o:D[C[i].id].o,ov:ov});
+}
+var h=’<div class="card"><h3>Intervention vs. outcome</h3>’;
+h+=’<p style="font-size:12px;color:#8a7e70;margin-bottom:12px">X = intervention score. Y = outcome (4=democracy, 1=collapse). Size = actor involvement.</p>’;
+h+=’<div class="scatter">’;
+var labels=[{l:“Collapse”,c:”#dc2626”,v:1},{l:“Restoration”,c:”#ea580c”,v:2},{l:“Reform”,c:”#ca8a04”,v:3},{l:“Democracy”,c:”#16a34a”,v:4}];
+for(var i=0;i<labels.length;i++){
+var top=((3-i)/3)*70+12;
+h+=’<div class="ylabel" style="top:'+top+'%;color:'+labels[i].c+'">’+labels[i].l+’</div>’;
+h+=’<div class="gridh" style="top:'+top+'%"></div>’;
+}
+for(var i=0;i<pts.length;i++){
+var p=pts[i];
+var xp=12+(p.int/5)*80;
+var yp=((4-p.ov)/3)*70+12;
+var sz=18+p.act*2;
+var col=”#8a7e70”;for(var j=0;j<OC.length;j++){if(OC[j].id===p.o)col=OC[j].c;}
+h+=’<div class="dot" style="left:'+xp+'%;top:'+yp+'%;width:'+sz+'px;height:'+sz+'px;background:'+col+'33;border:2px solid '+col+'">’+p.n.substring(0,3)+’</div>’;
+}
+h+=’<div class="xlabel">Low intervention –– High intervention</div>’;
+h+=’</div></div>’;
+
+pts.sort(function(a,b){return b.int-a.int;});
+var hi=[],lo=[];
+for(var i=0;i<pts.length;i++){if(pts[i].int>=3)hi.push(pts[i]);if(pts[i].int<2)lo.push(pts[i]);}
+var hin=[],lon=[];
+for(var i=0;i<hi.length;i++)hin.push(hi[i].n);
+for(var i=0;i<lo.length;i++)lon.push(lo[i].n);
+var hiAll=true;for(var i=0;i<hi.length;i++){if(hi[i].ov>2)hiAll=false;}
+var loAll=true;for(var i=0;i<lo.length;i++){if(lo[i].ov<3)loAll=false;}
+
+h+=’<div class="card"><h3>Key patterns</h3><div class="analysis">’;
+h+=’<p><b>High intervention (’+hin.join(”, “)+’):</b> ‘;
+h+=hiAll?‘All produced collapse or authoritarian restoration.’:‘Mixed outcomes despite heavy involvement.’;
+h+=’</p><p><b>Low intervention (’+lon.join(”, “)+’):</b> ‘;
+h+=loAll?‘All achieved reform or democratic transition.’:‘Mixed results even with minimal involvement.’;
+h+=’</p><p><b>Actor pattern:</b> Saudi/UAE dominance correlates with authoritarian restoration. Russia/Iran dominance correlates with prolonged war. Tunisia - the only democratic success - had no dominant external actor.</p>’;
+h+=’</div></div>’;
+
+h+=’<div class="card"><h3>Ranked by intervention</h3><table class="tbl"><thead><tr><th>#</th><th>Country</th><th>Score</th><th>Actors</th><th>Outcome</th></tr></thead><tbody>’;
+for(var i=0;i<pts.length;i++){
+var p=pts[i];
+h+=’<tr><td>’+(i+1)+’</td><td style="font-weight:600">’+p.n+’</td><td style="font-weight:700;color:#c4956a">’+p.int.toFixed(1)+’</td><td>’+p.act+’</td><td>’+bg(p.o)+’</td></tr>’;
+}
+h+=’</tbody></table></div>’;
+document.getElementById(“p2”).innerHTML=h;
 }
 
-function render() {
-  if (currentView === 'matrix') renderMatrix();
-  else if (currentView === 'country') renderCountry();
-  else if (currentView === 'correlation') renderCorrelation();
-}
-
-function renderMatrix() {
-  let html = '<div class="overflow-x"><table style="min-width:700px"><thead><tr><th class="left" style="width:120px">Country</th>';
-  INTERVENTION_TYPES.forEach(t => { html += `<th title="${t.desc}">${t.label}</th>`; });
-  html += '<th>Weighted total</th><th>Outcome</th></tr></thead><tbody>';
-
-  COUNTRIES.forEach(c => {
-    const d = data[c.id];
-    const wt = weightedTotal(c.id);
-    html += `<tr class="clickable" onclick="selectedCountry='${c.id}';switchView('country')">`;
-    html += `<td class="left" style="font-weight:600">${c.flag} ${c.name}</td>`;
-    INTERVENTION_TYPES.forEach(t => {
-      const v = d.scores[t.id];
-      const fg = v >= 3 ? '#1a1714' : '#c4956a';
-      html += `<td><div class="heat-cell" style="background:${HEAT_COLORS[v]};color:${fg}">${v}</div></td>`;
-    });
-    const wtColor = wt >= 3 ? '#c4956a' : '#8a7e70';
-    html += `<td><span class="mono" style="font-size:15px;font-weight:700;color:${wtColor}">${wt.toFixed(1)}</span></td>`;
-    html += `<td>${badgeHTML(d.outcome)}</td></tr>`;
-  });
-
-  html += '</tbody></table></div>';
-
-  // Weight controls
-  html += '<div class="card weight-panel"><h3 class="card-title">Variable weights</h3><div class="weight-grid">';
-  INTERVENTION_TYPES.forEach(t => {
-    html += `<div><span class="mono" style="font-size:12px;color:#8a7e70">${t.label}</span>`;
-    html += `<div class="slider-wrap"><input type="range" min="0" max="3" value="${weights[t.id]}" oninput="weights['${t.id}']=parseInt(this.value);this.nextElementSibling.textContent=this.value;render()" style="background:linear-gradient(to right,#c4956a ${(weights[t.id]/3)*100}%,#2a2420 ${(weights[t.id]/3)*100}%)"><span class="slider-val" style="color:${weights[t.id]>0?'#c4956a':'#5a524a'}">${weights[t.id]}</span></div></div>`;
-  });
-  html += '</div></div>';
-  html += '<p class="hint">Click any country row for full breakdown. Adjust weights to test which intervention types matter most.</p>';
-
-  document.getElementById('view-matrix').innerHTML = html;
-}
-
-function renderCountry() {
-  const c = data[selectedCountry];
-  const meta = COUNTRIES.find(x => x.id === selectedCountry);
-
-  let html = '<div class="country-selector">';
-  COUNTRIES.forEach(x => {
-    html += `<button class="country-btn ${selectedCountry===x.id?'active':''}" onclick="selectedCountry='${x.id}';render()">${x.flag} ${x.name}</button>`;
-  });
-  html += '</div>';
-
-  html += '<div class="grid-2">';
-
-  // Intervention scores
-  html += '<div class="card"><h3 class="card-title">Intervention type scores (0\u20135)</h3>';
-  INTERVENTION_TYPES.forEach(t => {
-    const v = c.scores[t.id];
-    html += `<div class="slider-row"><label><span>${t.label}</span><span class="desc">${t.desc}</span></label>`;
-    html += `<div class="slider-wrap"><input type="range" min="0" max="5" value="${v}" oninput="data['${selectedCountry}'].scores['${t.id}']=parseInt(this.value);this.nextElementSibling.textContent=this.value;updateSliderColor(this)" style="background:linear-gradient(to right,#c4956a ${(v/5)*100}%,#2a2420 ${(v/5)*100}%)"><span class="slider-val" style="color:${v>0?'#c4956a':'#5a524a'}">${v}</span></div></div>`;
-  });
-  html += '</div>';
-
-  // Actor involvement
-  html += '<div class="card"><h3 class="card-title">Actor involvement (0\u20135)</h3>';
-  ACTORS.forEach(a => {
-    const v = c.actors[a.id];
-    html += `<div class="slider-row"><label><span><span class="actor-dot" style="background:${a.color}"></span>${a.label}</span></label>`;
-    html += `<div class="slider-wrap"><input type="range" min="0" max="5" value="${v}" oninput="data['${selectedCountry}'].actors['${a.id}']=parseInt(this.value);this.nextElementSibling.textContent=this.value;updateSliderColor(this)" style="background:linear-gradient(to right,#c4956a ${(v/5)*100}%,#2a2420 ${(v/5)*100}%)"><span class="slider-val" style="color:${v>0?'#c4956a':'#5a524a'}">${v}</span></div></div>`;
-  });
-  html += '</div></div>';
-
-  // Outcome + Notes
-  html += '<div class="grid-2" style="margin-top:20px">';
-  html += '<div class="card"><h3 class="card-title">Outcome classification</h3>';
-  OUTCOMES.forEach(o => {
-    const active = c.outcome === o.id;
-    html += `<button class="outcome-btn" style="border-color:${active?o.color:'#3a342e'};background:${active?o.color+'22':'transparent'};color:${active?o.color:'#8a7e70'}" onclick="data['${selectedCountry}'].outcome='${o.id}';render()">${o.label}</button>`;
-  });
-  html += '</div>';
-
-  html += '<div class="card"><h3 class="card-title">Analytical notes</h3>';
-  html += `<textarea class="notes-area" oninput="data['${selectedCountry}'].notes=this.value" placeholder="Key context, causal mechanisms, counterfactuals...">${c.notes}</textarea></div></div>`;
-
-// Summary stats
-const wt = weightedTotal(selectedCountry);
-const at = actorTotal(selectedCountry);
-const da = dominantActor(selectedCountry);
-html += ‘<div class="stat-row">’;
-html += `<div class="stat-box"><div class="stat-label">Weighted intervention</div><div class="stat-value">${wt.toFixed(1)}</div></div>`;
-html += `<div class="stat-box"><div class="stat-label">Actor involvement</div><div class="stat-value">${at}</div></div>`;
-html += `<div class="stat-box"><div class="stat-label">Dominant actor</div><div class="stat-value" style="font-size:14px">${da}</div></div>`;
-html += `<div class="stat-box"><div class="stat-label">Outcome</div><div>${badgeHTML(c.outcome)}</div></div>`;
-html += ‘</div>’;
-
-document.getElementById(‘view-country’).innerHTML = html;
-}
-
-function renderCorrelation() {
-const points = COUNTRIES.map(c => ({
-…c,
-intervention: weightedTotal(c.id),
-actorInvolvement: actorTotal(c.id),
-outcome: data[c.id]?.outcome,
-outcomeValue: OUTCOMES.find(o => o.id === data[c.id]?.outcome)?.value || 0,
-}));
-
-let html = ‘<div class="card"><h3 class="card-title">Intervention intensity vs. outcome quality</h3>’;
-html += ‘<p style="font-size:13px;color:#8a7e70;margin:0 0 16px">X-axis: weighted intervention score. Y-axis: outcome (4 = democratic transition, 1 = state collapse). Bubble size = total actor involvement.</p>’;
-html += ‘<div class="scatter-container">’;
-
-// Y-axis labels
-const outReversed = […OUTCOMES].reverse();
-outReversed.forEach((o, i) => {
-html += `<div class="scatter-ylabel" style="top:${(i/4)*100+6}%;color:${o.color}">${o.label}</div>`;
-});
-
-// Grid lines
-[1,2,3,4].forEach(y => {
-html += `<div class="scatter-gridline" style="top:${((4-y)/3)*70+15}%"></div>`;
-});
-
-// Points
-points.forEach(c => {
-const xPct = 14 + (c.intervention / 5) * 78;
-const yPct = ((4 - c.outcomeValue) / 3) * 70 + 15;
-const size = 20 + c.actorInvolvement * 2.5;
-const oColor = OUTCOMES.find(o => o.id === c.outcome)?.color || ‘#8a7e70’;
-html += `<div class="scatter-point" style="left:${xPct}%;top:${yPct}%;width:${size}px;height:${size}px;background:${oColor}44;border:2px solid ${oColor}" title="${c.name}: intervention ${c.intervention.toFixed(1)}, actors ${c.actorInvolvement}"><span style="font-size:${Math.max(10,size*0.4)}px">${c.flag}</span></div>`;
-});
-
-html += ‘<div class="scatter-xlabel">\u2190 Low intervention    Weighted intervention score    High intervention \u2192</div>’;
-html += ‘</div></div>’;
-
-// Patterns
-const sorted = […points].sort((a, b) => b.intervention - a.intervention);
-const highInt = sorted.filter(c => c.intervention >= 3);
-const lowInt = sorted.filter(c => c.intervention < 2);
-
-html += ‘<div class="card analysis" style="margin-top:20px"><h3 class="card-title">Key patterns</h3>’;
-html += `<p><strong>High intervention (${highInt.map(c=>c.name).join(', ')}):</strong> ${highInt.every(c=>c.outcomeValue<=2) ? 'All produced state collapse or authoritarian restoration \u2014 suggesting heavy external involvement correlates with worse outcomes.' : 'Mixed outcomes despite heavy involvement.'}</p>`;
-html += `<p><strong>Low intervention (${lowInt.map(c=>c.name).join(', ')}):</strong> ${lowInt.every(c=>c.outcomeValue>=3) ? 'All achieved partial reform or democratic transition \u2014 suggesting less external interference correlates with better outcomes.' : 'Mixed results even with minimal foreign involvement.'}</p>`;
-html += ‘<p><strong>Dominant actor analysis:</strong> Countries where Saudi Arabia/UAE scored highest tended toward authoritarian restoration. Countries where Russia/Iran scored highest saw prolonged conflict. The single democratic transition case (Tunisia) had no dominant external actor.</p>’;
-html += ‘</div>’;
-
-// Ranked table
-html += ‘<div class="card" style="margin-top:20px"><h3 class="card-title">Ranked by intervention intensity</h3>’;
-html += ‘<table><thead><tr><th class="left">Rank</th><th class="left">Country</th><th>Intervention</th><th>Actor inv.</th><th>Outcome</th></tr></thead><tbody>’;
-sorted.forEach((c, i) => {
-html += `<tr><td class="left mono" style="color:#5a524a">${i+1}</td><td class="left" style="font-weight:600">${c.flag} ${c.name}</td><td class="mono" style="font-weight:700;color:#c4956a">${c.intervention.toFixed(1)}</td><td class="mono">${c.actorInvolvement}</td><td>${badgeHTML(c.outcome)}</td></tr>`;
-});
-html += ‘</tbody></table></div>’;
-
-document.getElementById(‘view-correlation’).innerHTML = html;
-}
-
-function updateSliderColor(el) {
-const pct = (el.value / el.max) * 100;
-el.style.background = `linear-gradient(to right, #c4956a ${pct}%, #2a2420 ${pct}%)`;
-const valSpan = el.nextElementSibling;
-valSpan.style.color = parseInt(el.value) > 0 ? ‘#c4956a’ : ‘#5a524a’;
-}
-
-document.addEventListener(‘DOMContentLoaded’, function() {
-try { render(); } catch(e) { document.body.innerHTML = ‘<pre style="color:red;padding:20px">’+e.message+’\n’+e.stack+’</pre>’; }
-});
+draw();
 </script>
 
 </body>
